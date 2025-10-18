@@ -101,12 +101,18 @@ const reviews = [
 
 export default function Index() {
   const { toast } = useToast();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     service: '',
     message: '',
   });
+
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    setIsMenuOpen(false);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -119,6 +125,60 @@ export default function Index() {
 
   return (
     <div className="min-h-screen">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border/50">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="text-2xl font-bold cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <span className="text-primary-foreground">Салон красоты</span>
+          </div>
+          
+          <div className="hidden md:flex items-center gap-8">
+            <button onClick={() => scrollToSection('services')} className="text-foreground/80 hover:text-foreground transition-colors">
+              Услуги
+            </button>
+            <button onClick={() => scrollToSection('gallery')} className="text-foreground/80 hover:text-foreground transition-colors">
+              Работы
+            </button>
+            <button onClick={() => scrollToSection('prices')} className="text-foreground/80 hover:text-foreground transition-colors">
+              Цены
+            </button>
+            <button onClick={() => scrollToSection('reviews')} className="text-foreground/80 hover:text-foreground transition-colors">
+              Отзывы
+            </button>
+            <Button onClick={() => scrollToSection('booking')} className="rounded-full">
+              Записаться
+            </Button>
+          </div>
+
+          <button 
+            className="md:hidden" 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <Icon name={isMenuOpen ? 'X' : 'Menu'} size={24} />
+          </button>
+        </div>
+
+        {isMenuOpen && (
+          <div className="md:hidden bg-background/95 backdrop-blur-lg border-t border-border/50 animate-fade-in">
+            <div className="container mx-auto px-4 py-6 flex flex-col gap-4">
+              <button onClick={() => scrollToSection('services')} className="text-left py-2 text-foreground/80 hover:text-foreground transition-colors">
+                Услуги
+              </button>
+              <button onClick={() => scrollToSection('gallery')} className="text-left py-2 text-foreground/80 hover:text-foreground transition-colors">
+                Работы
+              </button>
+              <button onClick={() => scrollToSection('prices')} className="text-left py-2 text-foreground/80 hover:text-foreground transition-colors">
+                Цены
+              </button>
+              <button onClick={() => scrollToSection('reviews')} className="text-left py-2 text-foreground/80 hover:text-foreground transition-colors">
+                Отзывы
+              </button>
+              <Button onClick={() => scrollToSection('booking')} className="rounded-full w-full">
+                Записаться
+              </Button>
+            </div>
+          </div>
+        )}
+      </nav>
       <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/30 via-secondary/20 to-accent/30 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,222,226,0.3),transparent_50%),radial-gradient(circle_at_70%_50%,rgba(229,222,255,0.3),transparent_50%)]" />
         
