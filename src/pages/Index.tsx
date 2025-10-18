@@ -78,7 +78,7 @@ const gallery = [
   },
 ];
 
-const reviews = [
+const initialReviews = [
   {
     name: 'Анна Петрова',
     rating: 5,
@@ -102,6 +102,13 @@ const reviews = [
 export default function Index() {
   const { toast } = useToast();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [reviews, setReviews] = useState(initialReviews);
+  const [showReviewForm, setShowReviewForm] = useState(false);
+  const [reviewData, setReviewData] = useState({
+    name: '',
+    rating: 5,
+    text: '',
+  });
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -121,6 +128,23 @@ export default function Index() {
       description: 'Мы свяжемся с вами в ближайшее время',
     });
     setFormData({ name: '', phone: '', service: '', message: '' });
+  };
+
+  const handleReviewSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const newReview = {
+      name: reviewData.name,
+      rating: reviewData.rating,
+      text: reviewData.text,
+      date: 'Только что',
+    };
+    setReviews([newReview, ...reviews]);
+    toast({
+      title: 'Отзыв опубликован!',
+      description: 'Спасибо за ваш отзыв',
+    });
+    setReviewData({ name: '', rating: 5, text: '' });
+    setShowReviewForm(false);
   };
 
   return (
@@ -347,9 +371,72 @@ export default function Index() {
 
       <section id="reviews" className="py-20 px-4 bg-background">
         <div className="container mx-auto">
-          <h2 className="text-5xl md:text-6xl font-bold text-center mb-16 text-foreground">
-            Отзывы клиентов
-          </h2>
+          <div className="flex flex-col md:flex-row justify-between items-center mb-16">
+            <h2 className="text-5xl md:text-6xl font-bold text-foreground">
+              Отзывы клиентов
+            </h2>
+            <Button 
+              onClick={() => setShowReviewForm(!showReviewForm)} 
+              className="rounded-full mt-4 md:mt-0"
+              variant={showReviewForm ? "outline" : "default"}
+            >
+              {showReviewForm ? 'Отмена' : 'Оставить отзыв'}
+            </Button>
+          </div>
+
+          {showReviewForm && (
+            <Card className="mb-12 border-2 bg-card/80 backdrop-blur animate-fade-in max-w-2xl mx-auto">
+              <CardContent className="pt-6">
+                <form onSubmit={handleReviewSubmit} className="space-y-6">
+                  <div>
+                    <Label htmlFor="reviewName" className="text-lg">Ваше имя</Label>
+                    <Input
+                      id="reviewName"
+                      placeholder="Анна"
+                      value={reviewData.name}
+                      onChange={(e) => setReviewData({ ...reviewData, name: e.target.value })}
+                      required
+                      className="mt-2 text-base"
+                    />
+                  </div>
+                  <div>
+                    <Label className="text-lg">Оценка</Label>
+                    <div className="flex gap-2 mt-2">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <button
+                          key={star}
+                          type="button"
+                          onClick={() => setReviewData({ ...reviewData, rating: star })}
+                          className="transition-transform hover:scale-110"
+                        >
+                          <Icon 
+                            name="Star" 
+                            size={32} 
+                            className={star <= reviewData.rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <Label htmlFor="reviewText" className="text-lg">Ваш отзыв</Label>
+                    <Textarea
+                      id="reviewText"
+                      placeholder="Расскажите о вашем опыте..."
+                      value={reviewData.text}
+                      onChange={(e) => setReviewData({ ...reviewData, text: e.target.value })}
+                      required
+                      className="mt-2 min-h-32 text-base"
+                    />
+                  </div>
+                  <Button type="submit" size="lg" className="w-full text-lg py-6 rounded-full">
+                    Опубликовать отзыв
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {reviews.map((review, index) => (
               <Card key={index} className="border-2 bg-card/50 backdrop-blur animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
