@@ -30,7 +30,7 @@ export default function Index() {
           
           <div className="relative animate-fade-in" style={{ animationDelay: '0.2s' }}>
             <img 
-              src="https://cdn.poehali.dev/files/057dc95a-0b27-4f12-aa55-42d3dde21576.png" 
+              src="https://cdn.poehali.dev/files/9222b5a3-2c9a-4c65-b56f-335943c59a86.jpg" 
               alt="Beauty salon"
               className="w-full h-auto object-cover rounded-lg"
             />
