@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
@@ -58,97 +57,109 @@ export default function Reviews() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background">
       <Header />
 
       <main className="pt-24">
-        <section className="py-20 px-4 bg-background min-h-[calc(100vh-96px)]">
-          <div className="container mx-auto">
-            <div className="flex flex-col md:flex-row justify-between items-center mb-16">
-              <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-4 md:mb-0">
-                Отзывы клиентов
+        <section className="py-32 px-6 min-h-[calc(100vh-96px)]">
+          <div className="container mx-auto max-w-5xl">
+            <div className="flex flex-col md:flex-row justify-between items-center mb-20">
+              <h1 className="text-6xl md:text-7xl mb-6 md:mb-0">
+                Отзывы
               </h1>
               <Button 
                 onClick={() => setShowReviewForm(!showReviewForm)} 
-                className="rounded-full"
+                variant="outline"
                 size="lg"
-                variant={showReviewForm ? "outline" : "default"}
+                className="rounded-none border-foreground/20 hover:bg-foreground/5 text-sm tracking-wider px-12"
               >
-                {showReviewForm ? 'Отмена' : 'Оставить отзыв'}
+                {showReviewForm ? 'отмена' : 'оставить отзыв'}
               </Button>
             </div>
 
             {showReviewForm && (
-              <Card className="mb-12 border-2 bg-card/80 backdrop-blur animate-fade-in max-w-2xl mx-auto">
-                <CardContent className="pt-6">
-                  <form onSubmit={handleReviewSubmit} className="space-y-6">
-                    <div>
-                      <Label htmlFor="reviewName" className="text-lg">Ваше имя</Label>
-                      <Input
-                        id="reviewName"
-                        placeholder="Анна"
-                        value={reviewData.name}
-                        onChange={(e) => setReviewData({ ...reviewData, name: e.target.value })}
-                        required
-                        className="mt-2 text-base"
-                      />
+              <div className="mb-20 max-w-2xl mx-auto animate-fade-in border border-border/20 p-12">
+                <form onSubmit={handleReviewSubmit} className="space-y-8">
+                  <div className="space-y-3">
+                    <Label htmlFor="reviewName" className="text-sm tracking-wide font-light">
+                      Ваше имя
+                    </Label>
+                    <Input
+                      id="reviewName"
+                      placeholder=""
+                      value={reviewData.name}
+                      onChange={(e) => setReviewData({ ...reviewData, name: e.target.value })}
+                      required
+                      className="border-0 border-b border-border/40 rounded-none px-0 focus-visible:ring-0 focus-visible:border-foreground/60"
+                    />
+                  </div>
+
+                  <div className="space-y-3">
+                    <Label className="text-sm tracking-wide font-light">Оценка</Label>
+                    <div className="flex gap-2">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <button
+                          key={star}
+                          type="button"
+                          onClick={() => setReviewData({ ...reviewData, rating: star })}
+                          className="transition-transform hover:scale-110"
+                        >
+                          <Icon 
+                            name="Star" 
+                            size={28} 
+                            className={star <= reviewData.rating ? 'fill-foreground text-foreground' : 'text-border'}
+                          />
+                        </button>
+                      ))}
                     </div>
-                    <div>
-                      <Label className="text-lg">Оценка</Label>
-                      <div className="flex gap-2 mt-2">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <button
-                            key={star}
-                            type="button"
-                            onClick={() => setReviewData({ ...reviewData, rating: star })}
-                            className="transition-transform hover:scale-110"
-                          >
-                            <Icon 
-                              name="Star" 
-                              size={32} 
-                              className={star <= reviewData.rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}
-                            />
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <Label htmlFor="reviewText" className="text-lg">Ваш отзыв</Label>
-                      <Textarea
-                        id="reviewText"
-                        placeholder="Расскажите о вашем опыте..."
-                        value={reviewData.text}
-                        onChange={(e) => setReviewData({ ...reviewData, text: e.target.value })}
-                        required
-                        className="mt-2 min-h-32 text-base"
-                      />
-                    </div>
-                    <Button type="submit" size="lg" className="w-full text-lg py-6 rounded-full">
-                      Опубликовать отзыв
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
+                  </div>
+
+                  <div className="space-y-3">
+                    <Label htmlFor="reviewText" className="text-sm tracking-wide font-light">
+                      Ваш отзыв
+                    </Label>
+                    <Textarea
+                      id="reviewText"
+                      placeholder=""
+                      value={reviewData.text}
+                      onChange={(e) => setReviewData({ ...reviewData, text: e.target.value })}
+                      required
+                      className="border-0 border-b border-border/40 rounded-none px-0 min-h-32 focus-visible:ring-0 focus-visible:border-foreground/60 resize-none"
+                    />
+                  </div>
+
+                  <Button 
+                    type="submit" 
+                    size="lg"
+                    variant="outline"
+                    className="w-full rounded-none border-foreground/20 hover:bg-foreground/5 text-sm tracking-wider py-6"
+                  >
+                    опубликовать
+                  </Button>
+                </form>
+              </div>
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="space-y-12">
               {reviews.map((review, index) => (
-                <Card key={index} className="border-2 bg-card/50 backdrop-blur animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
-                  <CardHeader>
-                    <div className="flex items-center justify-between mb-2">
-                      <CardTitle className="text-xl">{review.name}</CardTitle>
-                      <div className="flex gap-1">
-                        {[...Array(review.rating)].map((_, i) => (
-                          <Icon key={i} name="Star" size={16} className="fill-yellow-400 text-yellow-400" />
-                        ))}
-                      </div>
+                <div 
+                  key={index} 
+                  className="border-l border-border/20 pl-8 py-6 animate-fade-in"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl">{review.name}</h3>
+                    <div className="flex gap-1">
+                      {[...Array(review.rating)].map((_, i) => (
+                        <Icon key={i} name="Star" size={14} className="fill-foreground text-foreground" />
+                      ))}
                     </div>
-                    <CardDescription>{review.date}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-foreground/80 italic">{review.text}</p>
-                  </CardContent>
-                </Card>
+                  </div>
+                  <p className="text-sm text-muted-foreground mb-3 leading-relaxed">
+                    {review.text}
+                  </p>
+                  <p className="text-xs text-muted-foreground tracking-wide">{review.date}</p>
+                </div>
               ))}
             </div>
           </div>

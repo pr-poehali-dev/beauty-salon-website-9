@@ -1,38 +1,30 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import Icon from '@/components/ui/icon';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 const services = [
   {
-    icon: 'Scissors',
     title: 'Стрижка и укладка',
     description: 'Профессиональные стрижки любой сложности, укладки для особых случаев',
   },
   {
-    icon: 'Sparkles',
     title: 'Окрашивание',
     description: 'Сложные техники окрашивания, мелирование, балаяж, омбре',
   },
   {
-    icon: 'Heart',
     title: 'Маникюр и педикюр',
     description: 'Классический и аппаратный маникюр, дизайн ногтей, покрытие гель-лак',
   },
   {
-    icon: 'Smile',
     title: 'Макияж',
     description: 'Повседневный, вечерний, свадебный макияж от профессионалов',
   },
   {
-    icon: 'Flower2',
     title: 'Уход за лицом',
     description: 'Чистки, пилинги, массаж лица, anti-age процедуры',
   },
   {
-    icon: 'Sparkle',
     title: 'Spa-процедуры',
     description: 'Расслабляющие спа-ритуалы, массажи, обертывания',
   },
@@ -63,62 +55,63 @@ const priceList = [
 
 export default function Services() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background">
       <Header />
 
       <main className="pt-24">
-        <section className="py-20 px-4 bg-gradient-to-br from-primary/10 to-secondary/10">
-          <div className="container mx-auto">
-            <h1 className="text-5xl md:text-7xl font-bold text-center mb-6 text-foreground">
+        <section className="py-32 px-6">
+          <div className="container mx-auto max-w-6xl">
+            <h1 className="text-6xl md:text-7xl mb-6 text-center">
               Наши услуги
             </h1>
-            <p className="text-xl text-center text-muted-foreground mb-16 max-w-2xl mx-auto">
+            <p className="text-center text-muted-foreground mb-24 tracking-wide">
               Профессиональный уход и безупречный результат в каждой процедуре
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-16 mb-32">
               {services.map((service, index) => (
-                <Card key={index} className="border-2 hover:shadow-2xl transition-all duration-300 hover:scale-105 bg-card/50 backdrop-blur animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
-                  <CardHeader>
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center mb-4 mx-auto">
-                      <Icon name={service.icon as any} size={32} className="text-primary-foreground" />
-                    </div>
-                    <CardTitle className="text-2xl text-center">{service.title}</CardTitle>
-                    <CardDescription className="text-center text-base">
-                      {service.description}
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
+                <div 
+                  key={index} 
+                  className="space-y-3 animate-fade-in border-l border-foreground/10 pl-8"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <h3 className="text-3xl">{service.title}</h3>
+                  <p className="text-sm text-muted-foreground tracking-wide leading-relaxed">
+                    {service.description}
+                  </p>
+                </div>
               ))}
             </div>
 
-            <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 text-foreground">
-              Цены на услуги
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              {priceList.map((category, index) => (
-                <Card key={index} className="border-2 bg-card/50 backdrop-blur">
-                  <CardHeader>
-                    <CardTitle className="text-2xl">{category.category}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
+            <div className="border-t border-border/20 pt-24">
+              <h2 className="text-5xl md:text-6xl mb-16 text-center">
+                Цены
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12 max-w-4xl mx-auto">
+                {priceList.map((category, index) => (
+                  <div key={index} className="space-y-6">
+                    <h3 className="text-2xl pb-4 border-b border-border/20">{category.category}</h3>
                     <div className="space-y-4">
                       {category.items.map((item, idx) => (
-                        <div key={idx} className="flex justify-between items-center pb-3 border-b border-border/50 last:border-0">
-                          <span className="text-foreground">{item.name}</span>
-                          <span className="font-semibold text-primary-foreground">{item.price}</span>
+                        <div key={idx} className="flex justify-between items-start text-sm">
+                          <span className="text-muted-foreground max-w-xs">{item.name}</span>
+                          <span className="font-light tracking-wide ml-4">{item.price}</span>
                         </div>
                       ))}
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="text-center mt-12">
+            <div className="text-center mt-24">
               <Link to="/booking">
-                <Button size="lg" className="text-lg py-6 px-12 rounded-full shadow-lg hover:shadow-xl transition-all">
-                  Записаться на процедуру
+                <Button 
+                  size="lg"
+                  variant="outline"
+                  className="rounded-none border-foreground/20 hover:bg-foreground/5 text-sm tracking-wider px-16 py-7"
+                >
+                  записаться
                 </Button>
               </Link>
             </div>

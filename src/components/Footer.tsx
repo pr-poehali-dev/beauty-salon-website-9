@@ -1,25 +1,36 @@
-import Icon from '@/components/ui/icon';
-
 export default function Footer() {
   return (
-    <footer className="py-12 px-4 bg-gradient-to-br from-primary/30 to-secondary/30 text-center">
+    <footer className="py-16 px-6 bg-muted/20 border-t border-border/20">
       <div className="container mx-auto">
-        <h3 className="text-3xl font-bold mb-4">Салон красоты</h3>
-        <div className="flex flex-col md:flex-row justify-center items-center gap-6 mb-6 text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <Icon name="MapPin" size={20} />
-            <span>г. Москва, ул. Примерная, д. 10</span>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+          <div>
+            <h3 className="text-sm tracking-widest mb-4 font-light">КОНТАКТЫ</h3>
+            <div className="space-y-2 text-sm text-muted-foreground">
+              <p>г. Москва, ул. Примерная, д. 10</p>
+              <p>+7 (999) 123-45-67</p>
+              <p>Ежедневно 9:00 - 21:00</p>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Icon name="Phone" size={20} />
-            <span>+7 (999) 123-45-67</span>
+          <div>
+            <h3 className="text-sm tracking-widest mb-4 font-light">УСЛУГИ</h3>
+            <div className="space-y-2 text-sm text-muted-foreground">
+              <p>Стрижка и укладка</p>
+              <p>Окрашивание</p>
+              <p>Маникюр и педикюр</p>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Icon name="Clock" size={20} />
-            <span>Ежедневно 9:00 - 21:00</span>
+          <div>
+            <h3 className="text-sm tracking-widest mb-4 font-light">ИНФОРМАЦИЯ</h3>
+            <div className="space-y-2 text-sm text-muted-foreground">
+              <p>О салоне</p>
+              <p>Наши работы</p>
+              <p>Отзывы</p>
+            </div>
           </div>
         </div>
-        <p className="text-sm text-muted-foreground">© 2024 Все права защищены</p>
+        <div className="border-t border-border/20 pt-8 text-center">
+          <p className="text-xs text-muted-foreground tracking-wide">© 2024 Все права защищены</p>
+        </div>
       </div>
     </footer>
   );
