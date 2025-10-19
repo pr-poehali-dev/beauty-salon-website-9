@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 const services = [
   {
@@ -72,19 +74,7 @@ const reviews = [
 export default function Index() {
   return (
     <div className="min-h-screen">
-      <header className="fixed top-0 w-full bg-background/80 backdrop-blur-md z-50 border-b border-border/40">
-        <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link to="/" className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            Салон красоты
-          </Link>
-          <div className="flex gap-6 items-center">
-            <Link to="/" className="text-primary font-semibold">Главная</Link>
-            <Link to="/services" className="hover:text-primary transition-colors">Услуги</Link>
-            <Link to="/booking" className="hover:text-primary transition-colors">Записаться</Link>
-            <Link to="/reviews" className="hover:text-primary transition-colors">Отзывы</Link>
-          </div>
-        </nav>
-      </header>
+      <Header />
 
       <section className="relative min-h-screen flex items-center justify-center px-4 pt-20 bg-gradient-to-br from-primary/30 via-secondary/20 to-background">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=2574')] bg-cover bg-center opacity-10"></div>
@@ -212,26 +202,7 @@ export default function Index() {
         </div>
       </section>
 
-      <footer className="py-12 px-4 bg-gradient-to-br from-primary/30 to-secondary/30 text-center">
-        <div className="container mx-auto">
-          <h3 className="text-3xl font-bold mb-4">Салон красоты</h3>
-          <div className="flex flex-col md:flex-row justify-center items-center gap-6 mb-6 text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <Icon name="MapPin" size={20} />
-              <span>г. Москва, ул. Примерная, д. 10</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Icon name="Phone" size={20} />
-              <span>+7 (999) 123-45-67</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Icon name="Clock" size={20} />
-              <span>Ежедневно 9:00 - 21:00</span>
-            </div>
-          </div>
-          <p className="text-sm text-muted-foreground">© 2024 Все права защищены</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
